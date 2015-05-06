@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>WIN-4JTP3DCM4NA</Machine>
+    <WindowsUser>Matt</WindowsUser>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>2e35b13c-aef8-498f-9361-a1702ce0b11a</PackageIdentityName>
+    <RegisteredManifestChecksum>08AE31D8842187378F6BCE98BED8AC50653F5F38DA5FEF8BA5E3B09731C35143</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>2e35b13c-aef8-498f-9361-a1702ce0b11a_1.0.0.0_neutral__4bha6t8v6mmqe</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>2e35b13c-aef8-498f-9361-a1702ce0b11a_4bha6t8v6mmqe!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>2e35b13c-aef8-498f-9361-a1702ce0b11a</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=Matt</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-03-11T18:31:59.422</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\bin\Debug\HelloWorld.exe">
+      <PackagePath>HelloWorld.exe</PackagePath>
+      <Modified>2015-03-11T20:40:42.428</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\Assets\Logo.scale-100.png">
+      <PackagePath>Assets\Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-23T05:01:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\Assets\SmallLogo.scale-100.png">
+      <PackagePath>Assets\SmallLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-23T05:01:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-23T05:01:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-23T05:01:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\Common\ReadMe.txt">
+      <PackagePath>Common\ReadMe.txt</PackagePath>
+      <Modified>2015-03-11T16:35:41.255</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\bin\Debug\App.xbf">
+      <PackagePath>App.xbf</PackagePath>
+      <Modified>2015-03-11T20:40:41.921</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\bin\Debug\MainPage.xbf">
+      <PackagePath>MainPage.xbf</PackagePath>
+      <Modified>2015-03-11T20:40:41.925</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\bin\Debug\PhotoPage.xbf">
+      <PackagePath>PhotoPage.xbf</PackagePath>
+      <Modified>2015-03-11T20:40:41.932</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="c:\users\matt\documents\visual studio 2013\Projects\HelloWorld\HelloWorld\bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2015-03-11T18:31:59.268</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>
