@@ -42,7 +42,7 @@ namespace NBPReader
 		{
             try
             {
-                var isNull = await folder.TryGetItemAsync(fileName);
+                var isNull = await folder.GetItemAsync(fileName);
                 return isNull==null?false:true;
             }
             catch (Exception x)

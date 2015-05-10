@@ -235,5 +235,33 @@ namespace NBPReader
                 }
             }
         }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Exit();
+        }
+
+        private void toDatePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        {
+            DateTime choosen = (DateTime)e.NewDate.Date;
+            DateTime today = DateTime.Today;
+            int comparationResult = DateTime.Compare(choosen, today);
+
+            if (comparationResult > 0)
+            {
+                MessageDialog msgbox = new MessageDialog("Nie możesz przewidywać przyszłości");
+                msgbox.ShowAsync();
+            }
+            else
+            {
+                DataRetriever.chartValues.Clear();
+                DateTime from = fromDatePicker.Date.Date;
+                DateTime to = toDatePicker.Date.Date;
+
+                DataRetriever dr = new DataRetriever();
+                progressBar.Visibility = Visibility.Visible;
+                dr.PrintGraph(from, to, currentItem, chart);
+            }
+        }
     }
 }

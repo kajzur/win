@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using WinRTXamlToolkit.Controls.DataVisualization.Charting;
@@ -45,21 +46,33 @@ namespace NBPReader
 
         public CurrentDataSet ParseInitialXml()
         {
-            XDocument loadedData = loadData(current);
+            try
+            {
+                MainPage.CheckInternetConnection();
 
-            string date = (string)loadedData.Root.Element("data_publikacji");
-            var data = from query in loadedData.Descendants("pozycja")
-                       select new DataRetrieverItem
-                       {
-                           NazwaWaluty = (string)query.Element("nazwa_waluty"),
-                           Przelicznik = (string)query.Element("przelicznik"),
-                           KodWaluty = (string)query.Element("kod_waluty"),
-                           KursSredni = (string)query.Element("kurs_sredni")
-                       };
-            CurrentDataSet CurrentSet = new CurrentDataSet();
-            CurrentSet.items = data.ToList();
-            CurrentSet.date = DateTime.Parse(date);
-            return CurrentSet;
+                XDocument loadedData = loadData(current);
+
+                string date = (string)loadedData.Root.Element("data_publikacji");
+                var data = from query in loadedData.Descendants("pozycja")
+                           select new DataRetrieverItem
+                           {
+                               NazwaWaluty = (string)query.Element("nazwa_waluty"),
+                               Przelicznik = (string)query.Element("przelicznik"),
+                               KodWaluty = (string)query.Element("kod_waluty"),
+                               KursSredni = (string)query.Element("kurs_sredni")
+                           };
+                CurrentDataSet CurrentSet = new CurrentDataSet();
+                CurrentSet.items = data.ToList();
+                CurrentSet.date = DateTime.Parse(date);
+                return CurrentSet;
+            }
+            catch (Exception x)
+            {
+
+                return null;
+            }
+
+
         }
 
         private XDocument loadData(string url)

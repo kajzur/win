@@ -15,6 +15,11 @@
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">Historia waluty</x:String>
     </Page.Resources>
+    <Page.TopAppBar>
+        <CommandBar>
+            <AppBarButton x:ConnectionId='2' Label="Exit" Icon="Stop"                           />
+        </CommandBar>
+    </Page.TopAppBar>
     <Page.Transitions>
         <TransitionCollection>
             <EntranceThemeTransition/>
@@ -65,10 +70,10 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" >
                 <TextBlock Text="Od: " Style="{StaticResource SubheaderTextBlockStyle}"/>
-                <DatePicker x:ConnectionId='2' x:Name="fromDatePicker" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical"                                         />
+                <DatePicker x:ConnectionId='3' x:Name="fromDatePicker" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical"                                         />
                 <TextBlock Text="Do: " Style="{StaticResource SubheaderTextBlockStyle}"/>
-                <DatePicker Margin="20" x:Name="toDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical"/>
-                <Button x:ConnectionId='3' Content="Zapisz do pliku" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"                     />
+                <DatePicker x:ConnectionId='4' Margin="20" x:Name="toDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical"                                       />
+                <Button x:ConnectionId='5' Content="Zapisz do pliku" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"                     />
             </StackPanel>
             <Grid x:Name="gridWithChart" Grid.Column="2">
                 <Grid.RowDefinitions>

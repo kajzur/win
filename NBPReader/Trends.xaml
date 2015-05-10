@@ -15,6 +15,11 @@
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">Historia waluty</x:String>
     </Page.Resources>
+    <Page.TopAppBar>
+        <CommandBar>
+            <AppBarButton Label="Exit" Icon="Stop" Click="AppBarButton_Click"/>
+        </CommandBar>
+    </Page.TopAppBar>
     <Page.Transitions>
         <TransitionCollection>
             <EntranceThemeTransition/>
@@ -67,7 +72,7 @@
                 <TextBlock Text="Od: " Style="{StaticResource SubheaderTextBlockStyle}"/>
                 <DatePicker x:Name="fromDatePicker" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical" DateChanged="fromDatePicker_DateChanged"/>
                 <TextBlock Text="Do: " Style="{StaticResource SubheaderTextBlockStyle}"/>
-                <DatePicker Margin="20" x:Name="toDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical"/>
+                <DatePicker Margin="20" x:Name="toDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical" DateChanged="toDatePicker_DateChanged"/>
                 <Button Content="Zapisz do pliku" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button_Click"/>
             </StackPanel>
             <Grid x:Name="gridWithChart" Grid.Column="2">

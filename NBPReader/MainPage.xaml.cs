@@ -1,18 +1,9 @@
 ﻿using NBPReader.Common;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
@@ -28,6 +19,32 @@ namespace NBPReader
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        public static void CheckInternetConnection()
+        {
+            ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
+            bool internet = connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
+            if (!internet)
+            {
+                MessageDialog msgbox = new MessageDialog("Aplikacja wymaga połączenie z internetem");
+                msgbox.Commands.Add(new UICommand("Exit", new UICommandInvokedHandler(msgBox_Handler)));
+                msgbox.DefaultCommandIndex = 1;
+                msgbox.ShowAsync();
+                throw new Exception("Internet Connection required.");
+            }
+        }
+
+        private static void msgBox_Handler(IUICommand command)
+        {
+            String label = command.Label;
+            if (label.Equals("Retry"))
+            {
+                CheckInternetConnection();
+            }
+            else if (label.Equals("Exit"))
+            {
+                App.Current.Exit();
+            }
+        }
         /// <summary>
         /// This can be changed to a strongly typed view model.
         /// </summary>
@@ -48,15 +65,23 @@ namespace NBPReader
 
         public MainPage()
         {
-            this.InitializeComponent();
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.navigationHelper.SaveState += navigationHelper_SaveState;
-            DataRetriever dr = new DataRetriever();
-            CurrentDataSet cds = dr.ParseInitialXml();
-            currentList.ItemsSource = cds.items;
-            dr.SetDates(dates);
-            this.DataContext = cds;
+
+    
+                this.InitializeComponent(); 
+                this.navigationHelper = new NavigationHelper(this);
+                this.navigationHelper.LoadState += navigationHelper_LoadState;
+                this.navigationHelper.SaveState += navigationHelper_SaveState;  
+                DataRetriever dr = new DataRetriever();
+                CurrentDataSet cds = dr.ParseInitialXml();
+                if (cds != null)
+                {
+                    currentList.ItemsSource = cds.items;
+                    dr.SetDates(dates);
+                    this.DataContext = cds;
+                }
+     
+   
+
         }
 
         /// <summary>
@@ -100,6 +125,7 @@ namespace NBPReader
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+
             Trends.DataModel.ChartValues.Clear();
             navigationHelper.OnNavigatedTo(e);
         }
