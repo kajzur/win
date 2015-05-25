@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NBPReader
 {
-    class DataRetrieverItem
+    public class DataRetrieverItem
     {
         string nazwa_waluty;
         string przelicznik;

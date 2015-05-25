@@ -1,5 +1,7 @@
 ﻿using NBPReader.Common;
 using System;
+using System.IO;
+using System.Xml.Serialization;
 using Windows.Networking.Connectivity;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -17,6 +19,8 @@ namespace NBPReader
     {
 
         private NavigationHelper navigationHelper;
+        Windows.Storage.ApplicationDataContainer roamingSettings =
+                Windows.Storage.ApplicationData.Current.RoamingSettings;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         public static void CheckInternetConnection()
@@ -77,6 +81,7 @@ namespace NBPReader
                 {
                     currentList.ItemsSource = cds.items;
                     dr.SetDates(dates);
+
                     this.DataContext = cds;
                 }
      
@@ -142,6 +147,7 @@ namespace NBPReader
             if (e.AddedItems.Count > 0)
             {
                 var rawFileName = (e.AddedItems[0] as DateTimeWrapper).RawFileName;
+                roamingSettings.Values["selectedDate"] = dates.SelectedIndex;
                 DataRetriever dr = new DataRetriever();
                 dr.RefreshMainList(rawFileName, currentList);
             }  
@@ -152,9 +158,12 @@ namespace NBPReader
             if (e.AddedItems.Count > 0)
             {
                 DataRetrieverItem item = (e.AddedItems[0] as DataRetrieverItem);
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataRetrieverItem));
+                StringWriter textWriter = new StringWriter();
+                xmlSerializer.Serialize(textWriter, item);
                 if (this.Frame != null)
                 {
-                    this.Frame.Navigate(typeof(Trends), item);
+                    this.Frame.Navigate(typeof(Trends), textWriter.ToString());
                 }
             }  
         }

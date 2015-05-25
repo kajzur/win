@@ -57,16 +57,18 @@ namespace NBPReader
         }
 		public async Task<List<ChartValue>> GetCachedValues(){
             System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(List<ChartValue>));
-
             Stream file = await cacheFolder.OpenStreamForReadAsync(generateFileName());
             List<ChartValue> list = (List<ChartValue>)x.Deserialize(file);
+            file.Dispose();
             return list;
 		}
 
 		public async Task<int> CreateCache(List<ChartValue> values){
             System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(List<ChartValue>));
             StorageFile file = await cacheFolder.CreateFileAsync(generateFileName());
-            x.Serialize(await file.OpenStreamForWriteAsync(), values);
+            var stream = await file.OpenStreamForWriteAsync();
+            x.Serialize(stream, values);
+            stream.Dispose();
             return 1;
 		}
     }

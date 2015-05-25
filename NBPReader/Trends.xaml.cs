@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Serialization;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Imaging;
@@ -37,6 +38,7 @@ namespace NBPReader
         private static ProgressBar progress;
         public static DataModel DataModel = new DataModel();
         private DataRetrieverItem parameter;
+        Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
         /// <summary>
         /// This can be changed to a strongly typed view model.
         /// </summary>
@@ -130,11 +132,24 @@ namespace NBPReader
         {
             
             navigationHelper.OnNavigatedTo(e);
-            parameter = e.Parameter as DataRetrieverItem;
+            String serializedXml = e.Parameter as String;
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataRetrieverItem));
+            StringReader textReader = new StringReader(serializedXml);
+            parameter = (DataRetrieverItem)xmlSerializer.Deserialize(textReader);
             currentItem = parameter;
             DataRetriever dr = new DataRetriever();
             shortcut.Text = currentItem.NazwaWaluty;
-            dr.ShowInitialTrend(currentItem, chart);
+            if (roamingSettings.Values.ContainsKey("dateFrom") && roamingSettings.Values.ContainsKey("dateTo") && 
+                roamingSettings.Values.ContainsKey("lastCurrency"))
+            {
+                string lastCurrency = (String)roamingSettings.Values["lastCurrency"];
+                String lastTo = (String)roamingSettings.Values["dateTo"];
+                String lastFrom = (String)roamingSettings.Values["dateFrom"];
+                fromDatePicker.Date = DateTimeOffset.Parse(lastFrom);
+                toDatePicker.Date = DateTimeOffset.Parse( lastTo);
+                Refresh(fromDatePicker.Date.Date, toDatePicker.Date.Date);
+            } else 
+                dr.ShowInitialTrend(currentItem, chart);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -161,11 +176,18 @@ namespace NBPReader
                 DataRetriever.chartValues.Clear();
                 DateTime from = fromDatePicker.Date.Date;
                 DateTime to = toDatePicker.Date.Date;
-                
-                DataRetriever dr = new DataRetriever();
-                progressBar.Visibility = Visibility.Visible;
-                dr.PrintGraph(from, to, currentItem, chart);
+                roamingSettings.Values["dateFrom"] = from.ToString(); // nieobslugiwane dane. Do poprawienia... Zapisywac indeks znow? 
+                roamingSettings.Values["dateTo"] = to.ToString(); // the same
+                roamingSettings.Values["lastCurrency"] = currentItem.NazwaWaluty; // this should work
+                Refresh(from, to);
             }
+        }
+
+        private void Refresh(DateTime from, DateTime to)
+        {
+            DataRetriever dr = new DataRetriever();
+            progressBar.Visibility = Visibility.Visible;
+            dr.PrintGraph(from, to, currentItem, chart);
         }
         public async void SaveToFile()
         {
@@ -174,12 +196,6 @@ namespace NBPReader
             savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
             savePicker.FileTypeChoices.Add("JPG file", new List<string>() { ".png" });
             Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
-           /*  using (Stream x = await file.OpenStreamForWriteAsync())
-            {
-                x.Seek(0, SeekOrigin.Begin);
-                ms.WriteTo(x);
-            }
-*/
             Stream stream = wb.PixelBuffer.AsStream();
             byte[] pixels = new byte[(uint)stream.Length];
             await stream.ReadAsync(pixels, 0, pixels.Length);
@@ -201,11 +217,7 @@ namespace NBPReader
                 {
                     await outputStream.FlushAsync();
                 }
-            }
-          
-            
-
-           ;
+            };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -258,9 +270,10 @@ namespace NBPReader
                 DateTime from = fromDatePicker.Date.Date;
                 DateTime to = toDatePicker.Date.Date;
 
-                DataRetriever dr = new DataRetriever();
-                progressBar.Visibility = Visibility.Visible;
-                dr.PrintGraph(from, to, currentItem, chart);
+                roamingSettings.Values["dateFrom"] = from.ToString(); // nieobslugiwane dane. Do poprawienia... Zapisywac indeks znow? 
+                roamingSettings.Values["dateTo"] = to.ToString(); // the same
+                roamingSettings.Values["lastCurrency"] = currentItem.NazwaWaluty; // this should work
+                Refresh(from, to);
             }
         }
     }

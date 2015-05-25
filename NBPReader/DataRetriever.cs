@@ -22,6 +22,8 @@ namespace NBPReader
         private delegate void Callback(string result);
         private delegate void XmlCallback(XDocument x);
         public static List<ChartValue> chartValues = new List<ChartValue>();
+        Windows.Storage.ApplicationDataContainer roamingSettings =
+        Windows.Storage.ApplicationData.Current.RoamingSettings;
         public DataRetriever()
         {
 
@@ -103,6 +105,11 @@ namespace NBPReader
                 }
                 dates.Reverse();
                 lv.ItemsSource = dates;
+                if (roamingSettings.Values.ContainsKey("selectedDate"))
+                {
+                    int lastSelection = (int)roamingSettings.Values["selectedDate"];
+                    lv.SelectedIndex = lastSelection;
+                }
             };
             Get(datesUrl, c);
 
@@ -135,6 +142,7 @@ namespace NBPReader
         public void PrintGraph(DateTime from, DateTime to, DataRetrieverItem currentItem, Chart chart)
         {
             Trends.activateProgressBar();
+
             Callback c = delegate(string result)
             {
                 List<string> validNames = new List<string>();
@@ -176,7 +184,7 @@ namespace NBPReader
             }
             else
             {
-
+                DataRetriever.chartValues.Clear();
                 foreach (string filename in filenames)
                 {
                     HttpClient client = new HttpClient();

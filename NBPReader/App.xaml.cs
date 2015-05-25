@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using NBPReader.Common;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
@@ -39,9 +40,9 @@ namespace NBPReader
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
+            
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -57,6 +58,7 @@ namespace NBPReader
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
+                SuspensionManager.RegisterFrame(rootFrame, "appFrame");
                 // Set the default language
                 rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
 
@@ -64,6 +66,7 @@ namespace NBPReader
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
+                    await SuspensionManager.RestoreAsync();
                     //TODO: Load state from previously suspended application
                 }
 
@@ -99,10 +102,11 @@ namespace NBPReader
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
+            await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
     }
