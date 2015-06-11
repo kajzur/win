@@ -130,28 +130,36 @@
 
         </Grid>
 
-        <ListView x:Name="currentList"  Grid.Row="2" Margin="20" Grid.Column="2" ItemsSource="{Binding}" SelectionChanged="currentList_SelectionChanged" >
-            <ListView.ItemTemplate>
+        <GridView HorizontalContentAlignment="Left"  x:Name="currentList" Grid.Row="2" Margin="20" Grid.Column="2" ItemsSource="{Binding}" SelectionChanged="currentList_SelectionChanged" Grid.ColumnSpan="4" >
+            <GridView.ItemContainerStyle >
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Width" Value="200" />
+                    <Setter Property="Height" Value="100"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemTemplate  >
                 <DataTemplate>
-                    <StackPanel>
-                        <Grid>
+                    <StackPanel >
+                        <Grid HorizontalAlignment="Left">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"  />
+                                <ColumnDefinition Width="2*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                        </Grid>
+                        
 
-                        <TextBlock Grid.Column="1" Text="{Binding Path=NazwaWaluty}" />
-                        <TextBlock Grid.Column="1" Text="{Binding Path=KodWaluty}" />
-                        <TextBlock Grid.Column="2" Text="{Binding Path=KursSredni}" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=NazwaWaluty}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=KodWaluty}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=KursSredni}" />
+                        </Grid>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </GridView.ItemTemplate>
+        </GridView>
         <Grid Height="Auto" HorizontalAlignment="Stretch" Grid.Row="1"  >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

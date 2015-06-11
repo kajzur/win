@@ -60,6 +60,7 @@
             		IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Global User Interface"/>
                 <TextBlock x:Name="shortcut" Text="" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
             		IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+                <TextBlock x:Name="counter" VerticalAlignment="Bottom" Margin="0,0,30,40" />
 
             </StackPanel>
         </Grid>
@@ -81,8 +82,9 @@
                     <RowDefinition Height="9*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <ProgressBar   x:Name="progressBar" Visibility="Visible" IsIndeterminate="True"  Grid.Row="0" />
-                <Charting:Chart Grid.Row="1" x:Name="chart"  Margin="20" RenderTransformOrigin="0,0" RequestedTheme="Light" Background="{x:Null}" >
-                    <Charting:LineSeries Title="{Binding KodWaluty}" Margin="0" IndependentValuePath="Date" DependentValuePath="Value" IsSelectionEnabled="False" RequestedTheme="Light" IsEnabled="False" IsHitTestVisible="False" IsDoubleTapEnabled="False" IsRightTapEnabled="False" IsTapEnabled="False" Background="White"/>
+                <Charting:Chart  Grid.Row="1" x:Name="chart"  Margin="20" RenderTransformOrigin="0,0" RequestedTheme="Light" Background="{x:Null}" >
+
+                    <Charting:LineSeries  Title="Historia waluty" Margin="0" IndependentValuePath="Date" DependentValuePath="Value" IsSelectionEnabled="False" RequestedTheme="Light" IsEnabled="False" IsHitTestVisible="False" IsDoubleTapEnabled="False" IsRightTapEnabled="False" IsTapEnabled="False" Background="White"/>
                 </Charting:Chart>
         
             </Grid>

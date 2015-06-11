@@ -138,7 +138,7 @@ namespace NBPReader
             parameter = (DataRetrieverItem)xmlSerializer.Deserialize(textReader);
             currentItem = parameter;
             DataRetriever dr = new DataRetriever();
-            shortcut.Text = currentItem.NazwaWaluty;
+            shortcut.Text = currentItem.NazwaWaluty +" (dla "+ currentItem.Przelicznik + " " + currentItem.KodWaluty+")";
             if (roamingSettings.Values.ContainsKey("dateFrom") && roamingSettings.Values.ContainsKey("dateTo") && 
                 roamingSettings.Values.ContainsKey("lastCurrency"))
             {
@@ -164,7 +164,13 @@ namespace NBPReader
             DateTime choosen = (DateTime)e.NewDate.Date;
             DateTime firstRowInAPI = new DateTime(2002, 2, 1);
             int comparationResult = DateTime.Compare(choosen, firstRowInAPI);
-
+            int compare = DateTime.Compare(choosen ,toDatePicker.Date.Date);
+            if (compare > 0)
+            {
+                MessageDialog msgbox = new MessageDialog("Niepoprawna data");
+                msgbox.ShowAsync();
+                return;
+            }
             if (comparationResult < 0)
             {
                 MessageDialog msgbox = new MessageDialog("Wybrana data jest wcześniejsza niż dane NBP");
@@ -258,7 +264,13 @@ namespace NBPReader
             DateTime choosen = (DateTime)e.NewDate.Date;
             DateTime today = DateTime.Today;
             int comparationResult = DateTime.Compare(choosen, today);
-
+            int compare = DateTime.Compare(fromDatePicker.Date.Date, choosen);
+            if (compare > 0)
+            {
+                MessageDialog msgbox = new MessageDialog("Niepoprawna data");
+                msgbox.ShowAsync();
+                return;
+            }
             if (comparationResult > 0)
             {
                 MessageDialog msgbox = new MessageDialog("Nie możesz przewidywać przyszłości");

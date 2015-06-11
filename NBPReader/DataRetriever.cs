@@ -115,7 +115,7 @@ namespace NBPReader
 
         }
 
-        public void RefreshMainList(string filename, ListView lv)
+        public void RefreshMainList(string filename, GridView lv)
         {
 
             filename = filename.Trim(new Char[] { '\r' });
@@ -210,7 +210,17 @@ namespace NBPReader
 
                 await cc.CreateCache(DataRetriever.chartValues);
             }
+            chart.Axes.Clear();
             Trends.deactivateProgressBar();
+            /* chart.Axes.Add( new LinearAxis()
+                {
+                    Orientation = AxisOrientation.Y,
+                    Location = AxisLocation.Left,
+                    Interval = currentItem.Przelicznik.Equals("100")?0.01:0.01,
+                    ShowGridLines = true,
+                    Title = "Wartosci"
+                }
+            );*/
             (chart.Series[0] as LineSeries).ItemsSource = DataRetriever.chartValues;
             (chart.Series[0] as LineSeries).Refresh();
             (chart.Series[0] as LineSeries).UpdateLayout();
